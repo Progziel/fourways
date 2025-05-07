@@ -1,0 +1,140 @@
+2025-03-13 08:32:06 [[31merror[39m]: [31mError connecting to MongoDB: queryTxt ETIMEOUT cluster0.ijeus.mongodb.net[39m
+2025-03-13 10:32:46 [[31merror[39m]: [31mRedis connection error: getaddrinfo ENOTFOUND localhostt[39m
+2025-03-13 10:34:58 [[31merror[39m]: [31mError connecting to MongoDB: queryTxt ETIMEOUT cluster0.ijeus.mongodb.net[39m
+2025-03-14 07:41:55 [[31merror[39m]: [31mError connecting to MongoDB: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/[39m
+2025-03-14 07:54:16 [[31merror[39m]: [31mError connecting to MongoDB: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/[39m
+2025-03-14 07:55:05 [[31merror[39m]: [31mError connecting to MongoDB: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/[39m
+2025-03-14 08:17:25 [[31merror[39m]: [31mError connecting to MongoDB: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/[39m
+2025-03-14 08:18:27 [[31merror[39m]: [31mError connecting to MongoDB: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/[39m
+2025-03-14 09:01:24 [[31merror[39m]: [31mError connecting to MongoDB: querySrv ETIMEOUT _mongodb._tcp.cluster0.ijeus.mongodb.net[39m
+2025-03-19 09:26:01 [[31merror[39m]: [31mRedis Pub Client Error: Redis is already connecting/connected[39m
+2025-03-19 09:26:01 [[31merror[39m]: [31mRedis Sub Client Error: Redis is already connecting/connected[39m
+2025-03-20 10:40:10 [[31merror[39m]: [31mTypeError: redisClient.get is not a function[39m
+[31m    at fetchRoute (E:\backend\controllers\navigationController.js:73:43)[39m
+[31m    at Layer.handle [as handle_request] (E:\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at next (E:\backend\node_modules\express\lib\router\route.js:149:13)[39m
+[31m    at E:\backend\middlewares\verifyToken.js:27:13[39m
+[31m    at E:\backend\node_modules\jsonwebtoken\verify.js:261:12[39m
+[31m    at getSecret (E:\backend\node_modules\jsonwebtoken\verify.js:97:14)[39m
+[31m    at module.exports [as verify] (E:\backend\node_modules\jsonwebtoken\verify.js:101:10)[39m
+[31m    at exports.verifyToken (E:\backend\middlewares\verifyToken.js:15:13)[39m
+[31m    at Layer.handle [as handle_request] (E:\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at next (E:\backend\node_modules\express\lib\router\route.js:149:13)[39m
+2025-03-20 11:36:24 [[31merror[39m]: [31mTypeError: redisClient.get is not a function[39m
+[31m    at fetchRoute (E:\backend\controllers\navigationController.js:73:43)[39m
+[31m    at Layer.handle [as handle_request] (E:\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at next (E:\backend\node_modules\express\lib\router\route.js:149:13)[39m
+[31m    at E:\backend\middlewares\verifyToken.js:27:13[39m
+[31m    at E:\backend\node_modules\jsonwebtoken\verify.js:261:12[39m
+[31m    at getSecret (E:\backend\node_modules\jsonwebtoken\verify.js:97:14)[39m
+[31m    at module.exports [as verify] (E:\backend\node_modules\jsonwebtoken\verify.js:101:10)[39m
+[31m    at exports.verifyToken (E:\backend\middlewares\verifyToken.js:15:13)[39m
+[31m    at Layer.handle [as handle_request] (E:\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at next (E:\backend\node_modules\express\lib\router\route.js:149:13)[39m
+2025-03-21 08:27:39 [[31merror[39m]: [31mMulterError: Unexpected field[39m
+[31m    at wrappedFileFilter (E:\backend\node_modules\multer\index.js:40:19)[39m
+[31m    at Multipart.<anonymous> (E:\backend\node_modules\multer\lib\make-middleware.js:109:7)[39m
+[31m    at Multipart.emit (node:events:518:28)[39m
+[31m    at HeaderParser.cb (E:\backend\node_modules\busboy\lib\types\multipart.js:358:14)[39m
+[31m    at HeaderParser.push (E:\backend\node_modules\busboy\lib\types\multipart.js:162:20)[39m
+[31m    at SBMH.ssCb [as _cb] (E:\backend\node_modules\busboy\lib\types\multipart.js:394:37)[39m
+[31m    at feed (E:\backend\node_modules\streamsearch\lib\sbmh.js:248:10)[39m
+[31m    at SBMH.push (E:\backend\node_modules\streamsearch\lib\sbmh.js:104:16)[39m
+[31m    at Multipart._write (E:\backend\node_modules\busboy\lib\types\multipart.js:567:19)[39m
+[31m    at writeOrBuffer (node:internal/streams/writable:572:12)[39m
+2025-03-21 08:28:53 [[31merror[39m]: [31mMulterError: Unexpected field[39m
+[31m    at wrappedFileFilter (E:\backend\node_modules\multer\index.js:40:19)[39m
+[31m    at Multipart.<anonymous> (E:\backend\node_modules\multer\lib\make-middleware.js:109:7)[39m
+[31m    at Multipart.emit (node:events:518:28)[39m
+[31m    at HeaderParser.cb (E:\backend\node_modules\busboy\lib\types\multipart.js:358:14)[39m
+[31m    at HeaderParser.push (E:\backend\node_modules\busboy\lib\types\multipart.js:162:20)[39m
+[31m    at SBMH.ssCb [as _cb] (E:\backend\node_modules\busboy\lib\types\multipart.js:394:37)[39m
+[31m    at feed (E:\backend\node_modules\streamsearch\lib\sbmh.js:248:10)[39m
+[31m    at SBMH.push (E:\backend\node_modules\streamsearch\lib\sbmh.js:104:16)[39m
+[31m    at Multipart._write (E:\backend\node_modules\busboy\lib\types\multipart.js:567:19)[39m
+[31m    at writeOrBuffer (node:internal/streams/writable:572:12)[39m
+2025-03-21 08:30:55 [[31merror[39m]: [31mMulterError: Unexpected field[39m
+[31m    at wrappedFileFilter (E:\backend\node_modules\multer\index.js:40:19)[39m
+[31m    at Multipart.<anonymous> (E:\backend\node_modules\multer\lib\make-middleware.js:109:7)[39m
+[31m    at Multipart.emit (node:events:518:28)[39m
+[31m    at HeaderParser.cb (E:\backend\node_modules\busboy\lib\types\multipart.js:358:14)[39m
+[31m    at HeaderParser.push (E:\backend\node_modules\busboy\lib\types\multipart.js:162:20)[39m
+[31m    at SBMH.ssCb [as _cb] (E:\backend\node_modules\busboy\lib\types\multipart.js:394:37)[39m
+[31m    at feed (E:\backend\node_modules\streamsearch\lib\sbmh.js:248:10)[39m
+[31m    at SBMH.push (E:\backend\node_modules\streamsearch\lib\sbmh.js:104:16)[39m
+[31m    at Multipart._write (E:\backend\node_modules\busboy\lib\types\multipart.js:567:19)[39m
+[31m    at writeOrBuffer (node:internal/streams/writable:572:12)[39m
+2025-03-26 09:27:43 [[31merror[39m]: [31mError connecting to MongoDB: connect ETIMEDOUT 159.41.197.41:27017[39m
+2025-03-26 09:35:12 [[31merror[39m]: [31mNo token provided during Socket.IO handshake.[39m
+2025-03-26 09:37:28 [[31merror[39m]: [31mError connecting to MongoDB: queryTxt ETIMEOUT cluster0.ijeus.mongodb.net[39m
+2025-03-26 10:23:41 [[31merror[39m]: [31mError connecting to MongoDB: querySrv ETIMEOUT _mongodb._tcp.cluster0.ijeus.mongodb.net[39m
+2025-03-26 10:26:40 [[31merror[39m]: [31mError connecting to MongoDB: querySrv ETIMEOUT _mongodb._tcp.cluster0.ijeus.mongodb.net[39m
+2025-03-26 10:43:14 [[31merror[39m]: [31mError connecting to MongoDB: queryTxt ETIMEOUT cluster0.ijeus.mongodb.net[39m
+2025-03-26 11:12:36 [[31merror[39m]: [31mError sending message: Message validation failed: sender: Cast to ObjectId failed for value "2" (type string) at path "sender" because of "BSONError", receiver: Cast to ObjectId failed for value "1" (type string) at path "receiver" because of "BSONError"[39m
+2025-04-03 14:28:20 [[31merror[39m]: [31mError calculating route:[39m
+2025-04-03 14:28:45 [[31merror[39m]: [31mError calculating route:[39m
+2025-04-03 14:31:01 [[31merror[39m]: [31mError calculating route:[39m
+2025-04-03 14:38:25 [[31merror[39m]: [31mError calculating route:[39m
+2025-04-03 14:39:38 [[31merror[39m]: [31mError calculating route:[39m
+2025-04-03 14:39:40 [[31merror[39m]: [31mError calculating route:[39m
+2025-04-03 14:41:48 [[31merror[39m]: [31mError calculating route:[39m
+2025-04-03 14:43:24 [[31merror[39m]: [31mError calculating route:[39m
+2025-04-03 15:38:40 [[31merror[39m]: [31mError fetching route from Google Maps:[39m
+2025-04-03 15:40:35 [[31merror[39m]: [31mError fetching route from Google Maps: ERR syntax error[39m
+2025-04-03 15:41:48 [[31merror[39m]: [31mError fetching route from Google Maps: ERR syntax error[39m
+2025-04-03 15:44:46 [[31merror[39m]: [31mError fetching route from Google Maps: Cannot set headers after they are sent to the client[39m
+2025-04-03 15:57:56 [[31merror[39m]: [31mSyntaxError: Expected double-quoted property name in JSON at position 99 (line 4 column 1)[39m
+[31m    at JSON.parse (<anonymous>)[39m
+[31m    at parse (E:\backend\node_modules\body-parser\lib\types\json.js:92:19)[39m
+[31m    at E:\backend\node_modules\body-parser\lib\read.js:128:18[39m
+[31m    at AsyncResource.runInAsyncScope (node:async_hooks:211:14)[39m
+[31m    at invokeCallback (E:\backend\node_modules\raw-body\index.js:238:16)[39m
+[31m    at done (E:\backend\node_modules\raw-body\index.js:227:7)[39m
+[31m    at IncomingMessage.onEnd (E:\backend\node_modules\raw-body\index.js:287:7)[39m
+[31m    at IncomingMessage.emit (node:events:518:28)[39m
+[31m    at endReadableNT (node:internal/streams/readable:1698:12)[39m
+[31m    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)[39m
+2025-04-05 11:45:06 [[31merror[39m]: [31mSyntaxError: Unexpected end of JSON input[39m
+[31m    at JSON.parse (<anonymous>)[39m
+[31m    at createStrictSyntaxError (E:\backend\node_modules\body-parser\lib\types\json.js:169:10)[39m
+[31m    at parse (E:\backend\node_modules\body-parser\lib\types\json.js:86:15)[39m
+[31m    at E:\backend\node_modules\body-parser\lib\read.js:128:18[39m
+[31m    at AsyncResource.runInAsyncScope (node:async_hooks:211:14)[39m
+[31m    at invokeCallback (E:\backend\node_modules\raw-body\index.js:238:16)[39m
+[31m    at done (E:\backend\node_modules\raw-body\index.js:227:7)[39m
+[31m    at IncomingMessage.onEnd (E:\backend\node_modules\raw-body\index.js:287:7)[39m
+[31m    at IncomingMessage.emit (node:events:518:28)[39m
+[31m    at endReadableNT (node:internal/streams/readable:1698:12)[39m
+2025-04-08 12:12:55 [[31merror[39m]: [31mMulterError: Unexpected field[39m
+[31m    at wrappedFileFilter (E:\backend\node_modules\multer\index.js:40:19)[39m
+[31m    at Multipart.<anonymous> (E:\backend\node_modules\multer\lib\make-middleware.js:109:7)[39m
+[31m    at Multipart.emit (node:events:518:28)[39m
+[31m    at HeaderParser.cb (E:\backend\node_modules\busboy\lib\types\multipart.js:358:14)[39m
+[31m    at HeaderParser.push (E:\backend\node_modules\busboy\lib\types\multipart.js:162:20)[39m
+[31m    at SBMH.ssCb [as _cb] (E:\backend\node_modules\busboy\lib\types\multipart.js:394:37)[39m
+[31m    at feed (E:\backend\node_modules\streamsearch\lib\sbmh.js:200:10)[39m
+[31m    at SBMH.push (E:\backend\node_modules\streamsearch\lib\sbmh.js:104:16)[39m
+[31m    at Multipart._write (E:\backend\node_modules\busboy\lib\types\multipart.js:567:19)[39m
+[31m    at writeOrBuffer (node:internal/streams/writable:572:12)[39m
+2025-04-08 14:28:51 [[31merror[39m]: [31mError connecting to MongoDB: querySrv ETIMEOUT _mongodb._tcp.cluster0.ijeus.mongodb.net[39m
+2025-04-08 14:32:00 [[31merror[39m]: [31mError deleting inaccurate reports:[39m
+2025-04-08 14:34:00 [[31merror[39m]: [31mError deleting inaccurate reports:[39m
+2025-04-14 12:20:04 [[31merror[39m]: [31mError connecting to MongoDB: querySrv ETIMEOUT _mongodb._tcp.cluster0.ijeus.mongodb.net[39m
+2025-04-14 12:54:00 [[31merror[39m]: [31mError connecting to MongoDB: querySrv ETIMEOUT _mongodb._tcp.cluster0.ijeus.mongodb.net[39m
+2025-04-14 16:13:29 [[31merror[39m]: [31mSyntaxError: Expected double-quoted property name in JSON at position 61 (line 4 column 1)[39m
+[31m    at JSON.parse (<anonymous>)[39m
+[31m    at parse (E:\backend\node_modules\body-parser\lib\types\json.js:92:19)[39m
+[31m    at E:\backend\node_modules\body-parser\lib\read.js:128:18[39m
+[31m    at AsyncResource.runInAsyncScope (node:async_hooks:211:14)[39m
+[31m    at invokeCallback (E:\backend\node_modules\raw-body\index.js:238:16)[39m
+[31m    at done (E:\backend\node_modules\raw-body\index.js:227:7)[39m
+[31m    at IncomingMessage.onEnd (E:\backend\node_modules\raw-body\index.js:287:7)[39m
+[31m    at IncomingMessage.emit (node:events:518:28)[39m
+[31m    at endReadableNT (node:internal/streams/readable:1698:12)[39m
+[31m    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)[39m
+2025-04-17 09:45:52 [[31merror[39m]: [31mError connecting to MongoDB: connect ETIMEDOUT 159.41.197.30:27017[39m
+2025-05-02 09:59:42 [[31merror[39m]: [31mError connecting to MongoDB: querySrv ETIMEOUT _mongodb._tcp.cluster0.ijeus.mongodb.net[39m
+2025-05-02 11:24:01 [[31merror[39m]: [31mFailed to send welcome email: connect ETIMEDOUT 1.179.116.1:587[39m
+2025-05-02 14:39:49 [[31merror[39m]: [31mError connecting to MongoDB: queryTxt ETIMEOUT cluster0.ijeus.mongodb.net[39m
+2025-05-02 15:13:49 [[31merror[39m]: [31mError connecting to MongoDB: connect ETIMEDOUT 159.41.197.41:27017[39m
+2025-05-05 09:41:11 [[31merror[39m]: [31mError connecting to MongoDB: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/[39m
