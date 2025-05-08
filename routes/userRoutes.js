@@ -3,7 +3,7 @@ const { getUserProfile, addUserLocation, getUserNearByLocation,
     blockUser,getBlockedUsers,unblockUser, addUserImageToGallery,getUserGallery,
     removeConnection,getConnections,sendFriendRequest,acceptFriendRequest,
     cancelFriendRequest,rejectFriendRequest,getMutualFriends,updateUser,deleteFamilyMember,updateFamilyMember,
-    sendFamilyRequest,rejectFamilyRequest,acceptFamilyRequest
+    sendFamilyRequest,rejectFamilyRequest,acceptFamilyRequest,searchUsers,searchConnections
 
 } = require('../controllers/userController');
 const {verifyToken} = require('../middlewares/verifyToken');
@@ -53,7 +53,9 @@ router.delete("/remove-connection", verifyToken, removeConnection);
 router.get("/get-mutual-friends", verifyToken,getMutualFriends );
 //connection routes ends here
 
-
+//search users in all User Model
+router.get('/search', searchUsers);
+router.get('/search-connections', verifyToken, searchConnections);
 
 
 module.exports = router;

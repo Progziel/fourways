@@ -1256,7 +1256,140 @@ const FamilyMemberLocation= async (req, res) => {
   }
 };
 
+const searchUsers = async (req, res) => {
+  try {
 
+    const { q = '', page = 1 } = req.query;
+    const limit = 10; 
+    const skip = (parseInt(page) - 1) * limit;
+
+    const searchQuery = q
+      ? {
+          $or: [
+            { full_name: { $regex: q, $options: 'i' } }, // Case-insensitive partial match for full_name
+            { email: { $regex: q, $options: 'i' } }, // Case-insensitive partial match for email
+          ],
+        }
+      : {};
+
+    const users = await User.find(searchQuery)
+      .select('-password -refreshToken -friendRequests -familyRequests -blockedUsers') 
+      .limit(limit)
+      .lean();
+
+    const totalUsers = await User.countDocuments(searchQuery);
+
+     const totalPages = Math.ceil(totalUsers / limit);
+    const currentPage = parseInt(page);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        users,
+        pagination: {
+          currentPage,
+          totalPages,
+          totalUsers,
+          usersPerPage: limit,
+        },
+      },
+    });
+  } catch (error) {
+    console.error('Error searching users:', error);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while searching users.',
+    });
+  }
+};
+
+const searchConnections = async (req, res) => {
+  try {
+    // Extract authenticated user (assumes req.user is set by auth middleware)
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Unauthorized: No user ID provided.' });
+    }
+
+    // Extract query parameters
+    const { q = '', page = 1 } = req.query;
+    const limit = 10; // Fixed limit of 10 users per page
+    const skip = (parseInt(page) - 1) * limit;
+
+    // Validate page number
+    const pageNum = parseInt(page);
+    if (isNaN(pageNum) || pageNum < 1) {
+      return res.status(400).json({ success: false, message: 'Invalid page number.' });
+    }
+
+    // Find the authenticated user to get their connections
+    const currentUser = await User.findById(userId).select('connections').lean();
+    if (!currentUser) {
+      return res.status(404).json({ success: false, message: 'User not found.' });
+    }
+
+    // If no connections, return empty result
+    if (!currentUser.connections || currentUser.connections.length === 0) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          users: [],
+          pagination: {
+            currentPage: pageNum,
+            totalPages: 0,
+            totalUsers: 0,
+            usersPerPage: limit,
+          },
+        },
+      });
+    }
+
+    // Build search query for connected users
+    const searchQuery = {
+      _id: { $in: currentUser.connections }, // Limit to users in connections array
+      ...(q && {
+        $or: [
+          { full_name: { $regex: q, $options: 'i' } }, // Case-insensitive partial match for full_name
+          { email: { $regex: q, $options: 'i' } }, // Case-insensitive partial match for email
+        ],
+      }),
+    };
+
+    // Execute query with pagination
+    const users = await User.find(searchQuery)
+      .select('-password -refreshToken -friendRequests -familyRequests -blockedUsers') // Exclude sensitive fields
+      .skip(skip)
+      .limit(limit)
+      .lean(); // Convert to plain JavaScript objects for performance
+
+    // Get total count for pagination metadata
+    const totalUsers = await User.countDocuments(searchQuery);
+
+    // Calculate pagination metadata
+    const totalPages = Math.ceil(totalUsers / limit);
+    const currentPage = pageNum;
+
+    // Return response
+    res.status(200).json({
+      success: true,
+      data: {
+        users,
+        pagination: {
+          currentPage,
+          totalPages,
+          totalUsers,
+          usersPerPage: limit,
+        },
+      },
+    });
+  } catch (error) {
+    console.error('Error searching connections:', error);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while searching connections.',
+    });
+  }
+};
 module.exports = {
     getUserProfile,
     updateUser,
@@ -1281,8 +1414,8 @@ module.exports = {
     sendFamilyRequest,
     rejectFamilyRequest,
     acceptFamilyRequest,
-
-
+    searchUsers,
+    searchConnections,
     
     FamilyMemberLocation
     
