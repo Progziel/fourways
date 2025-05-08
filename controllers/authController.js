@@ -9,95 +9,198 @@ const { secretKey } = require('../config/jwt');
 const logger = require("../utils/logger");
 const generateOTP = require('../utils/otp');
 const { registerTemplate } = require('../utils/emailTemplates');
-
+const mongoose = require("mongoose");
 require("dotenv").config();
 
+// const registerUser = async (req, res) => {
+//   try {
+//     const { full_name, phone, email, password, profilePicture,address } = req.body;
+
+//     if (!full_name || !email || !password) {
+//       return res.status(400).json({
+//         statusCode: 400,
+//         message: "Full name, email, and password are required.",
+//         data: [],
+//       });
+//     }
+
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({
+//         statusCode: 400,
+//         message: "Email is already registered.",
+//         data: [],
+//       });
+//     }
+
+//     // Create Family first
+//     const newFamily = new Family({
+//       name: `${full_name}'s Family`,
+//       address: address || "",
+//       members: [],
+      
+//     });
+
+//     const savedFamily = await newFamily.save();
+
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(password, salt);
+
+//     const user = new User({
+//       full_name,
+//       phone,
+//       email,
+//       password: hashedPassword,
+//       profilePicture: profilePicture || "",
+//       familyId: savedFamily._id,
+//     });
+
+//     const savedUser = await user.save();
+
+//       //OTP Generation
+//       const OTP_Code =  generateOTP();
+//       const expirationTime = new Date(); // Current time
+//       expirationTime.setMinutes(expirationTime.getMinutes() + 5); // Add 5 minutes to the current time
+
+//       const existingOTP = await Otp.findOne({ email: email });
+//       if (existingOTP) {
+//           await Otp.updateOne({ email: email }, { otp: OTP_Code, otpExpiresAt: expirationTime});
+//       }
+//       if(!existingOTP){
+//           await Otp.create({ email,otp: OTP_Code, otpExpiresAt: expirationTime}) ;
+//       }
+
+//        try {
+//            const { text, html } = registerTemplate(full_name, OTP_Code);
+//            await sendEmail(email, 'Welcome to Our Platform!', text, html);
+//          } catch (emailError) {
+//            logger.error("Failed to send welcome email: " + emailError.message);
+//          }
+
+//       const userObj = {
+//       id: savedUser._id,
+//       full_name: savedUser.full_name,
+//       phone: savedUser.phone,
+//       email: savedUser.email,
+//       familyId: savedFamily._id,
+//     };
+
+//     res.status(201).json({
+//       statusCode: 201,
+//       message: "User registered successfully.",
+//       data: userObj,
+//     });
+
+//   } catch (err) {
+//     res.status(400).json({
+//       statusCode: 400,
+//       message: err.message,
+//       data: [],
+//     });
+//   }
+// };
 const registerUser = async (req, res) => {
-  try {
-    const { full_name, phone, email, password, profilePicture,address } = req.body;
+    try {
+      const { full_name, phone, email, password, profilePicture, address } = req.body;
 
-    if (!full_name || !email || !password) {
-      return res.status(400).json({
+      if (!full_name || !email || !password) {
+        return res.status(400).json({
+          statusCode: 400,
+          message: "Full name, email, and password are required.",
+          data: [],
+        });
+      }
+
+      const existingUser = await User.findOne({ email }).lean();
+      if (existingUser) {
+        return res.status(400).json({
+          statusCode: 400,
+          message: "Email is already registered.",
+          data: [],
+        });
+      }
+  
+      // Start a MongoDB transaction
+      const session = await mongoose.startSession();
+      try {
+        session.startTransaction();
+  
+         const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+  
+        const user = new User({
+          full_name,
+          phone,
+          email,
+          password: hashedPassword,
+          profilePicture: profilePicture || "",
+          // familyId will be set after Family is created
+        });
+        const savedUser = await user.save({ session });
+  
+        // Create and save the Family
+        const newFamily = new Family({
+          name: `${full_name}'s Family`,
+          address: address || "",
+          members: [savedUser._id], 
+          createdBy: savedUser._id,
+        });
+        const savedFamily = await newFamily.save({ session });
+  
+        savedUser.familyId = savedFamily._id;
+        await savedUser.save({ session });
+  
+        // Generate and store OTP
+        const OTP_Code = generateOTP();
+        const expirationTime = new Date();
+        expirationTime.setMinutes(expirationTime.getMinutes() + 5);
+  
+        await Otp.updateOne(
+          { email },
+          { otp: OTP_Code, otpExpiresAt: expirationTime },
+          { upsert: true, session }
+        );
+  
+        // Send welcome email
+        try {
+          const { text, html } = registerTemplate(full_name, OTP_Code);
+          await sendEmail(email, "Welcome to Our Platform!", text, html);
+        } catch (emailError) {
+          logger.error("Failed to send welcome email: " + emailError.message);
+          throw new Error("Failed to send welcome email.");
+        }
+  
+        // Commit the transaction
+        await session.commitTransaction();
+          const userObj = {
+          id: savedUser._id,
+          full_name: savedUser.full_name,
+          phone: savedUser.phone,
+          email: savedUser.email,
+          familyId: savedFamily._id,
+        };
+  
+        res.status(201).json({
+          statusCode: 201,
+          message: "User registered successfully.",
+          data: userObj,
+        });
+      } catch (err) {
+        // Roll back the transaction on error
+        await session.abortTransaction();
+        throw err;
+      } finally {
+        session.endSession();
+      }
+    } catch (err) {
+      logger.error("Error registering user: " + err.message);
+      res.status(400).json({
         statusCode: 400,
-        message: "Full name, email, and password are required.",
+        message: err.message,
         data: [],
       });
     }
-
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({
-        statusCode: 400,
-        message: "Email is already registered.",
-        data: [],
-      });
-    }
-
-    // Create Family first
-    const newFamily = new Family({
-      name: `${full_name}'s Family`,
-      address: address || "",
-      members: [], // later push family member IDs here if needed
-    });
-
-    const savedFamily = await newFamily.save();
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const user = new User({
-      full_name,
-      phone,
-      email,
-      password: hashedPassword,
-      profilePicture: profilePicture || "",
-      familyId: savedFamily._id,
-    });
-
-    const savedUser = await user.save();
-
-      //OTP Generation
-      const OTP_Code =  generateOTP();
-      const expirationTime = new Date(); // Current time
-      expirationTime.setMinutes(expirationTime.getMinutes() + 5); // Add 5 minutes to the current time
-
-      const existingOTP = await Otp.findOne({ email: email });
-      if (existingOTP) {
-          await Otp.updateOne({ email: email }, { otp: OTP_Code, otpExpiresAt: expirationTime});
-      }
-      if(!existingOTP){
-          await Otp.create({ email,otp: OTP_Code, otpExpiresAt: expirationTime}) ;
-      }
-
-       try {
-           const { text, html } = registerTemplate(full_name, OTP_Code);
-           await sendEmail(email, 'Welcome to Our Platform!', text, html);
-         } catch (emailError) {
-           logger.error("Failed to send welcome email: " + emailError.message);
-         }
-
-      const userObj = {
-      id: savedUser._id,
-      full_name: savedUser.full_name,
-      phone: savedUser.phone,
-      email: savedUser.email,
-      familyId: savedFamily._id,
-    };
-
-    res.status(201).json({
-      statusCode: 201,
-      message: "User registered successfully.",
-      data: userObj,
-    });
-
-  } catch (err) {
-    res.status(400).json({
-      statusCode: 400,
-      message: err.message,
-      data: [],
-    });
-  }
-};
+  };
 
 const loginUser = async (req, res) => {
     try {
