@@ -471,6 +471,12 @@ const verifyOTP= async (req, res) => {
             return res.status(400).json({ message: "OTP has expired." });
         }
 
+        const updatedUser = await User.findOneAndUpdate(
+            { email },
+            { $set: { isVerified: true } },
+            { new: true, runValidators: true }
+          );
+
         res.status(200).json({ message: "OTP verified" });
     } catch (error) {
         console.error(error);
