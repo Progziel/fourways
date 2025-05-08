@@ -1358,6 +1358,10 @@ const searchConnections = async (req, res) => {
     // Execute query with pagination
     const users = await User.find(searchQuery)
       .select('-password -refreshToken -friendRequests -familyRequests -blockedUsers') // Exclude sensitive fields
+      .populate({
+        path: 'connections',
+        select: 'full_name email profilePicture isVerified createdAt updatedAt', // Select specific fields for populated connections
+      })
       .skip(skip)
       .limit(limit)
       .lean(); // Convert to plain JavaScript objects for performance
